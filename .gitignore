@@ -1,0 +1,17 @@
+*.csproj
+*.sln
+.vs/
+Library/
+Logs/
+obj/
+Temp/
+.env
+.env.*
+venv/
+.venv/
+*/venv/
+*/.venv/
+__pycache__/
+*.pyc
+*.gguf
+*.gguf.meta
