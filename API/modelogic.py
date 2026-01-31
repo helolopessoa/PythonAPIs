@@ -21,8 +21,8 @@ open_ai_key = os.getenv("OPENAI_API_KEY")
 _client = OpenAI()
 # DEFAULT_API_BASE = "https://api.openai.com/v1"
 _MODEL_NAME = "gpt-4o-mini"
-_TEMPERATURE = 0.0
-_MAX_TOKENS = 16
+_TEMPERATURE = 0.3
+_MAX_TOKENS = 50
 
 def generateOutput(prompt: str, system_prompt: str) -> str:
     """
@@ -85,7 +85,7 @@ def generateOutputAnswer(prompt: str, system_prompt: str) -> str:
     # classification = raw_output.split()[0]
 
     # return response
-    print(response)
+    # print(response)
     return {
         "id": response.id,
         "model": response.model,
@@ -107,6 +107,30 @@ def generateOutputAnswer(prompt: str, system_prompt: str) -> str:
             "total_tokens": response.usage.total_tokens
         }
     }
+
+def mockgenerateOutputAnswer():
+    return {
+        "id": "chatcmpl-mock-001",
+        "model": "gpt-4o-mini-mock",
+        "created": 1768156890,
+        "choices": [
+            {
+                "index": 0,
+                "finish_reason": "stop",
+                "message": {
+                    "role": "assistant",
+                    "content": "I am focused on our mission right now. The Downsiders are relentless, and we cannot afford distractions."
+                }
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 120,
+            "completion_tokens": 24,
+            "total_tokens": 144
+        }
+    }
+
+
 
     # return {
     # "content": response.choices[0].message.content,

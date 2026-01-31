@@ -7,17 +7,33 @@ from fuzzylogic import *
 app = Flask(__name__)
 
 
-@app.route('/fuzzyapi', methods=['GET'])
 #  [0] AngerXFear [Range(-1f, 1f)]
 #  [1] DisgustXTrust [Range(-1f, 1f)]
 #  [2] SadnessXJoy [Range(-1f, 1f)]
 #  [3] AntecipationXSurprise [Range(-1f, 1f)]
-def get():
-    emo = getEmotion()
-    return {"emotion" : emo}
 
-@app.route('/fuzzyapi', methods=['POST'])
-def post():
+
+# @app.route('/fuzzyapi', methods=['GET'])
+# def get():
+#     emo = getEmotion()
+#     return {"emotion" : emo}
+
+# @app.route('/fuzzyapi', methods=['POST'])
+# def post():
+#     emo = []
+#     emo.append(request.form['axeAF'])
+#     emo.append(request.form['axeDT'])
+#     emo.append(request.form['axeSJ'])
+#     emo.append(request.form['axeAS'])
+#     for i in range(4):
+#         emo[i] = emo[i].replace(",",".")
+#         emo[i] = float(emo[i])
+#     postEmotion(emo)
+#     return '', 204 
+
+
+@app.route('/modelapi/fuzzyapi', methods=['POST'])
+def fuzzy():
     emo = []
     emo.append(request.form['axeAF'])
     emo.append(request.form['axeDT'])
@@ -26,9 +42,8 @@ def post():
     for i in range(4):
         emo[i] = emo[i].replace(",",".")
         emo[i] = float(emo[i])
-    postEmotion(emo)
-    return '', 204 
-    # return request.json();
+    emo = postEmotion(emo)
+    return {"emotion" : emo}
 # /<float:axeAF>/<float:axeDT>/<float:axeSJ>/<float:axeAS>
 
 
@@ -42,6 +57,7 @@ def generateAnswer():
     # max_tokens = data.get("max_tokens", 150)
     # output = llamaAnswer(prompt)
     output = generateOutputAnswer(prompt, "You are a non-playable character in a game. You respond only as the NPC, never as the game engine, narrator or the player. REMAIN IN CHARACTER as a non-playable character (NPC) in a game, ANSWERING ACCORDINGLY TO THE PLAYER.")
+    # output = mockgenerateOutputAnswer()
     return jsonify(output)
 # ##############################
 
@@ -63,13 +79,16 @@ def generateClassification():
 ##############################
 
 
-@app.route("/ping", methods=["GET"])
+@app.route("/modelapi/ping", methods=["GET"])
 def ping():
     print("[FLASK] /ping called")
     return {"status": "ok"}
 
 
 if __name__ == "__main__":
-    app.run(port=11434)
+    app.run(port=11434,
+            debug=True,
+            threaded=False,
+            use_reloader=False)
 
     

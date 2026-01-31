@@ -13,8 +13,8 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
-global result;
-result = "Neutral";
+# global result;
+# result = "Neutral";
 
 # Creating fuzzy sets for Pluthick's basic axes
 angerxfear = ctrl.Antecedent(np.arange(-100,100,1),'angerxfear')
@@ -116,17 +116,14 @@ secundary1_ctrl = ctrl.ControlSystem([s1_rule1,s1_rule2,s1_rule3,s1_rule4])
 secundary2_ctrl = ctrl.ControlSystem([s2_rule1,s2_rule2,s2_rule3,s2_rule4])
 tertiary_ctrl = ctrl.ControlSystem([t_rule1,t_rule2,t_rule3,t_rule4,t_rule5,t_rule6,t_rule7,t_rule8])
 
-primary_simulator = ctrl.ControlSystemSimulation(primary_ctrl)
-secundary1_simulator = ctrl.ControlSystemSimulation(secundary1_ctrl)
-secundary2_simulator = ctrl.ControlSystemSimulation(secundary2_ctrl)
-tertiary_simulator = ctrl.ControlSystemSimulation(tertiary_ctrl)
 
 def postEmotion(emotion):
-    global result; 
+    # global result; 
     result = calculateResultEmotion(emotion)
-
-def getEmotion():
     return result
+
+# def getEmotion():
+#     return result
 
 def calculateResultEmotion(emotion):
     for i in range(len(emotion)):
@@ -162,6 +159,10 @@ def calculateResultEmotion(emotion):
         #VAI PRA LÓGICA FUZZY
 
 def calculateDyads(emotion):
+    primary_simulator = ctrl.ControlSystemSimulation(primary_ctrl)
+    secundary1_simulator = ctrl.ControlSystemSimulation(secundary1_ctrl)
+    secundary2_simulator = ctrl.ControlSystemSimulation(secundary2_ctrl)
+    tertiary_simulator = ctrl.ControlSystemSimulation(tertiary_ctrl)
     for i in range(len(emotion)):
         primary_simulator.input[str_axes[i]] = emotion[i]
         tertiary_simulator.input[str_axes[i]] = emotion[i]
@@ -178,7 +179,7 @@ def calculateDyads(emotion):
     tertiary_simulator.compute()
 
 
-    outputs = [primary_simulator.output['primary'],tertiary_simulator.output['tertiary']]
+    outputs = [primary_simulator.output['primary'], tertiary_simulator.output['tertiary']]
     s_outputs = [secundary1_simulator.output['secundary1'],secundary2_simulator.output['secundary2']]
 
     response_emotion = []
