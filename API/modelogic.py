@@ -22,7 +22,7 @@ _client = OpenAI()
 # DEFAULT_API_BASE = "https://api.openai.com/v1"
 _MODEL_NAME = "gpt-4o-mini"
 _TEMPERATURE = 0.3
-_MAX_TOKENS = 50
+_MAX_TOKENS = 1000
 
 def generateOutput(prompt: str, system_prompt: str) -> str:
     """
@@ -50,9 +50,8 @@ def generateOutput(prompt: str, system_prompt: str) -> str:
     raw_output = response.choices[0].message.content.strip()
 
     # Minimal sanitization: take first token / line
-    classification = raw_output.split()[0]
-
-    return classification
+    response = raw_output.split()[0]
+    return response
 
 
 def generateOutputAnswer(prompt: str, system_prompt: str) -> str:

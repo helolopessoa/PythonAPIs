@@ -79,6 +79,25 @@ def generateClassification():
 ##############################
 
 
+
+# ###########################
+# @app.route('/modelapi/classification', methods=['POST'])
+# def generateClassification():
+#     data = request.get_json()
+    
+#     if not data or "prompt" not in data:
+#         return jsonify({"error": "Missing 'prompt' field"}), 400
+    
+#     prompt = data["prompt"]
+
+#     try:
+#         result = generateOutput(prompt, "You are a strict dialogue interpreter.")
+#         return jsonify({"result": result})
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+# ##############################
+
+
 @app.route("/modelapi/ping", methods=["GET"])
 def ping():
     print("[FLASK] /ping called")
