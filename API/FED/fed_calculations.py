@@ -239,11 +239,19 @@ def evaluate_folder(folder_name):
 
 
 # Evaluate both folders
-b_results = evaluate_folder("LLMAsPlayer/Baseline")
+# b_results = evaluate_folder("LLMAsPlayer/Baseline")
+# print("b_results:", type(b_results))
+
+# s_results = evaluate_folder("LLMAsPlayer/Scaffold")
+# print("s_results:", type(s_results))
+
+b_results = evaluate_folder("ScriptsFED/Baseline")
 print("b_results:", type(b_results))
 
-s_results = evaluate_folder("LLMAsPlayer/Scaffold")
+s_results = evaluate_folder("ScriptsFED/Scaffold")
 print("s_results:", type(s_results))
+
+
 
 all_results = b_results + s_results
 
@@ -253,7 +261,7 @@ if all_results:
     #  coleta todas as keys possíveis
     all_keys = set().union(*(r.keys() for r in all_results))
 
-    with open("fed_results.csv", "w", newline="", encoding="utf-8") as csvfile:
+    with open("fed_results_scripts.csv", "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=sorted(all_keys))
         writer.writeheader()
         writer.writerows(all_results)
